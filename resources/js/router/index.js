@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import invoiceIndex from "../components/invoices/index.vue";
-import invoiceNew from "../components/invoices/new.vue"
+import invoiceNew from "../components/invoices/new.vue";
 import notFound from "../components/NotFound.vue";
-
 
 const routes = [
     {
@@ -10,7 +9,7 @@ const routes = [
         component: invoiceIndex,
     },
     {
-        path:'/invoice/new',
+        path: "/invoice/new",
         component: invoiceNew,
     },
     {
@@ -20,6 +19,6 @@ const routes = [
 ];
 const router = createRouter({
     history: createWebHistory(),
-    routes
-})
-export default router
+    routes,
+});
+export default router;

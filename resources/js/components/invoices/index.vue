@@ -1,39 +1,35 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 
-let invoices = ref([])
-let searchInvoice = ref([])
+let invoices = ref([]);
+let searchInvoice = ref([]);
 
 onMounted(async () => {
-    getInvoices()
-})
+    getInvoices();
+});
 
 const getInvoices = async () => {
-    let response = await axios.get("/api/get_all_invoice")
-    console.log('response', response)
-    invoices.value = response.data.invoices
-}
+    let response = await axios.get("/api/get_all_invoice");
+    console.log("response", response);
+    invoices.value = response.data.invoices;
+};
 
 const search = async () => {
-    let response = await axios.get('/api/search_invoice?s=' + searchInvoice.value)
-    console.log('response', response.data.invoices)
-    invoices.value = response.data.invoices
-}
+    let response = await axios.get(
+        "/api/search_invoice?s=" + searchInvoice.value
+    );
+    console.log("response", response.data.invoices);
+    invoices.value = response.data.invoices;
+};
 
-// const newInvoice = async () => {
-//     let form = await axios.get("/api/create_invoice")
-//     console.log('form', form.data)
-// }
 const newInvoice = async () => {
-    let form = await axios.get("/api/create_invoice")
-    console.log('form', form.data)
-    router.push('/invoice/new')
-}
-
-
+    let form = await axios.get("/api/create_invoice");
+    console.log("form", form.data);
+    router.push("/invoice/new");
+};
 </script>
 
 <template>
@@ -44,7 +40,9 @@ const newInvoice = async () => {
                     <h2 class="invoice__title">Invoices</h2>
                 </div>
                 <div>
-                    <a class="btn btn-secondary" @click="newInvoice"> New Invoice </a>
+                    <a class="btn btn-secondary" @click="newInvoice">
+                        New Invoice
+                    </a>
                 </div>
             </div>
 
@@ -56,7 +54,9 @@ const newInvoice = async () => {
                     <div class="table--filter--listWrapper">
                         <ul class="table--filter--list">
                             <li>
-                                <p class="table--filter--link table--filter--link--active">
+                                <p
+                                    class="table--filter--link table--filter--link--active"
+                                >
                                     All
                                 </p>
                             </li>
@@ -75,10 +75,14 @@ const newInvoice = async () => {
                     </div>
                     <div class="relative">
                         <i class="table--search--input--icon fas fa-search"></i>
-                        <input class="table--search--input" type="text" placeholder="Search invoice" v-model="searchInvoice"
-                            @keyup="search" />
+                        <input
+                            class="table--search--input"
+                            type="text"
+                            placeholder="Search invoice"
+                            v-model="searchInvoice"
+                            @keyup="search"
+                        />
                     </div>
-
                 </div>
 
                 <div class="table--heading">
@@ -93,23 +97,30 @@ const newInvoice = async () => {
                 <!-- item 1 -->
                 <div>
                     <div v-if="invoices && invoices.length > 0">
-                        <div class="table--items" v-for="item in invoices" :key="item.id">
-                            <a href="#" class="table--items--transactionId">#{{ item.id }}</a>
+                        <div
+                            class="table--items"
+                            v-for="item in invoices"
+                            :key="item.id"
+                        >
+                            <a href="#" class="table--items--transactionId"
+                                >#{{ item.id }}</a
+                            >
                             <p>{{ item.data }}</p>
                             <p>{{ item.number }}</p>
-                            <p v-if="item.customer">{{ item.customer.firstname }}</p>
+                            <p v-if="item.customer">
+                                {{ item.customer.firstname }}
+                            </p>
                             <p v-else></p>
                             <p>{{ item.customer_id }}</p>
                             <p>{{ item.due_date }}</p>
                             <p>{{ item.total }}</p>
                         </div>
                     </div>
-                    <!-- <div class="table--items" v-else>
+                    <div class="table--items" v-else>
                         <p v-if="invoices === undefined">Loading...</p>
                         <p v-else>No invoices found</p>
-                    </div> -->
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
